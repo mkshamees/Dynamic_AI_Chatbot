@@ -1,9 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
+from backend.app.auth.dependencies import get_current_user
+from backend.app.auth.jwt_handler import create_access_token
 from backend.app.database.session import get_db
-from backend.app.schemas.user import UserCreate, UserResponse
+from backend.app.models.user import User
+from backend.app.schemas.user import (
+    Token,
+    UserCreate,
+    UserResponse,
+)
 from backend.app.services.user_service import (
+    authenticate_user,
     create_user,
     get_user_by_email,
     get_user_by_username,
@@ -11,7 +20,7 @@ from backend.app.services.user_service import (
 
 router = APIRouter(
     prefix="/auth",
-    tags=["Authentication"]
+    tags=["Authentication"],
 )
 
 
@@ -20,21 +29,74 @@ router = APIRouter(
     response_model=UserResponse,
     status_code=status.HTTP_201_CREATED,
 )
-def register(user: UserCreate, db: Session = Depends(get_db)):
+def register(
+    user: UserCreate,
+    db: Session = Depends(get_db),
+):
     """
     Register a new user.
     """
 
     if get_user_by_email(db, user.email):
         raise HTTPException(
-            status_code=400,
-            detail="Email already registered."
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email already registered.",
         )
 
     if get_user_by_username(db, user.username):
         raise HTTPException(
-            status_code=400,
-            detail="Username already exists."
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username already exists.",
         )
 
     return create_user(db, user)
+
+
+@router.post(
+    "/login",
+    response_model=Token,
+)
+def login(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db),
+):
+    """
+    Authenticate a user and return a JWT access token.
+    """
+
+    user = authenticate_user(
+        db=db,
+        email=form_data.username,   # OAuth2 uses "username" field
+        password=form_data.password,
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    access_token = create_access_token(
+        data={
+            "sub": user.email,
+        }
+    )
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+    }
+
+
+@router.get(
+    "/me",
+    response_model=UserResponse,
+)
+def read_current_user(
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Return the currently authenticated user.
+    """
+    return current_user
