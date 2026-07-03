@@ -64,24 +64,37 @@ def login(
     Authenticate a user and return a JWT access token.
     """
 
+    print("\n========== LOGIN DEBUG ==========")
+    print("Username received :", repr(form_data.username))
+    print("Password received :", repr(form_data.password))
+    print("================================")
+
     user = authenticate_user(
         db=db,
-        email=form_data.username,   # OAuth2 uses "username" field
+        email=form_data.username,
         password=form_data.password,
     )
 
+    print("Authentication Result:", user)
+
     if not user:
+        print("❌ LOGIN FAILED")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password.",
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+    print("✅ LOGIN SUCCESSFUL")
+
     access_token = create_access_token(
         data={
             "sub": user.email,
         }
     )
+
+    print("Generated Token:", access_token)
+    print("================================\n")
 
     return {
         "access_token": access_token,
