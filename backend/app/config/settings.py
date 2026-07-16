@@ -23,11 +23,6 @@ class Settings(BaseSettings):
     # ==========================================
     # AI PROVIDER
     # ==========================================
-    # Options:
-    #   groq
-    #   openai
-    #   ollama
-    # ==========================================
     AI_PROVIDER: str = "groq"
 
     # ==========================================
@@ -48,8 +43,11 @@ class Settings(BaseSettings):
     OLLAMA_BASE_URL: str = "http://localhost:11434/v1"
     OLLAMA_MODEL: str = "llama3.2"
 
+    # ==========================================
+    # SETTINGS
+    # ==========================================
     model_config = SettingsConfigDict(
-        env_file="backend/.env",
+        env_file=".env",
         extra="ignore",
     )
 
