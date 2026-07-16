@@ -1,5 +1,5 @@
-from backend.app.rag.loader import load_document
-from backend.app.rag.splitter import split_text
+from app.rag.loader import load_document
+from app.rag.splitter import split_text
 
 text = load_document(
     r"C:\Users\G-USER\Documents\Rplot.pdf"

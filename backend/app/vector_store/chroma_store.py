@@ -1,6 +1,6 @@
 import chromadb
 
-from backend.app.vector_store.embedding import embed
+from app.vector_store.embedding import embed
 
 client = chromadb.PersistentClient(
     path="backend/chroma_db"

@@ -11,12 +11,12 @@ from fastapi import (
 
 from sqlalchemy.orm import Session
 
-from backend.app.database.session import get_db
-from backend.app.auth.dependencies import get_current_user
-from backend.app.models.user import User
-from backend.app.models.document import Document
+from app.database.session import get_db
+from app.auth.dependencies import get_current_user
+from app.models.user import User
+from app.models.document import Document
 
-from backend.app.rag.document_service import (
+from app.rag.document_service import (
     index_document,
 )
 

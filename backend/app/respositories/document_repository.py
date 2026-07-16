@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from backend.app.models.document import Document
+from app.models.document import Document
 
 
 class DocumentRepository:

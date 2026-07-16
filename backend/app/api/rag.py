@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from backend.app.vector_store.chroma_store import search_document
+from app.vector_store.chroma_store import search_document
 
 router = APIRouter(
     prefix="/rag",

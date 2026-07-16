@@ -1,19 +1,19 @@
 from sqlalchemy.orm import Session
 
-from backend.app.models.conversation import Conversation
-from backend.app.models.message import Message
+from app.models.conversation import Conversation
+from app.models.message import Message
 
-from backend.app.chatbot.ai_engine import ai_engine
+from app.chatbot.ai_engine import ai_engine
 
-from backend.app.services.memory_service import memory_service
+from app.services.memory_service import memory_service
 
-from backend.app.rag.retriever import retrieve_document_context
-from backend.app.services.title_service import title_service
+from app.rag.retriever import retrieve_document_context
+from app.services.title_service import title_service
 
-from backend.app.agents.agent import agent
+from app.agents.agent import agent
 
 # Register all tools automatically
-import backend.app.tools
+import app.tools
 
 
 class ChatService:

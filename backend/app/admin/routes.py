@@ -6,15 +6,15 @@ from fastapi import (
 
 from sqlalchemy.orm import Session
 
-from backend.app.auth.dependencies import (
+from app.auth.dependencies import (
     admin_required,
 )
 
-from backend.app.database.session import get_db
+from app.database.session import get_db
 
-from backend.app.models.user import User
+from app.models.user import User
 
-from backend.app.admin.schemas import (
+from app.admin.schemas import (
     DashboardOverview,
     UserSummary,
     ConversationSummary,
@@ -26,7 +26,7 @@ from backend.app.admin.schemas import (
     AdminMessage,
 )
 
-from backend.app.admin.service import (
+from app.admin.service import (
     admin_service,
 )
 

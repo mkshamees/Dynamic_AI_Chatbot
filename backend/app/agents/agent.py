@@ -1,5 +1,5 @@
-from backend.app.agents.router import tool_router
-from backend.app.agents.registry import tool_registry
+from app.agents.router import tool_router
+from app.agents.registry import tool_registry
 
 
 class Agent:

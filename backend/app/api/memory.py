@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from backend.app.auth.dependencies import get_current_user
-from backend.app.database.session import get_db
-from backend.app.models.user import User
+from app.auth.dependencies import get_current_user
+from app.database.session import get_db
+from app.models.user import User
 
-from backend.app.services.memory_service import memory_service
+from app.services.memory_service import memory_service
 
 router = APIRouter(
     prefix="/memory",

@@ -1,6 +1,6 @@
 import re
 
-from backend.app.services.memory_service import memory_service
+from app.services.memory_service import memory_service
 
 
 def extract_memory(

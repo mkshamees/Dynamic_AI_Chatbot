@@ -1,4 +1,4 @@
-from backend.app.chatbot.ai_engine import ai_engine
+from app.chatbot.ai_engine import ai_engine
 
 
 class TitleService:

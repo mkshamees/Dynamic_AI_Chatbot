@@ -1,7 +1,7 @@
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text
 from datetime import datetime
 
-from backend.app.database.base import Base
+from app.database.base import Base
 
 
 class Message(Base):

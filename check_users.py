@@ -1,5 +1,5 @@
-from backend.app.database.connection import SessionLocal
-from backend.app.models.user import User
+from app.database.connection import SessionLocal
+from app.models.user import User
 
 db = SessionLocal()
 

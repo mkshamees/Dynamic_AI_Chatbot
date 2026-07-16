@@ -1,7 +1,7 @@
 from openai import OpenAI
 from groq import Groq
 
-from backend.app.config.settings import settings
+from app.config.settings import settings
 
 
 class AIEngine:

@@ -1,5 +1,5 @@
-from backend.app.database.connection import SessionLocal
-from backend.app.models.user import User
+from app.database.connection import SessionLocal
+from app.models.user import User
 
 db = SessionLocal()
 
@@ -8,10 +8,11 @@ user = db.query(User).filter(
 ).first()
 
 if user:
-    user.is_admin = True
+    user.is_superuser = True
+    user.role = "admin"
     db.commit()
-    print("User is now an administrator.")
+    print("✅ User promoted to administrator.")
 else:
-    print("User not found.")
+    print("❌ User not found.")
 
 db.close()

@@ -13,22 +13,22 @@ from fastapi.responses import (
 )
 from sqlalchemy.orm import Session
 
-from backend.app.auth.dependencies import get_current_user
-from backend.app.database.session import get_db
+from app.auth.dependencies import get_current_user
+from app.database.session import get_db
 
-from backend.app.models.conversation import Conversation
-from backend.app.models.message import Message
-from backend.app.models.user import User
+from app.models.conversation import Conversation
+from app.models.message import Message
+from app.models.user import User
 
-from backend.app.schemas.chat import (
+from app.schemas.chat import (
     ChatRequest,
     ChatResponse,
     ConversationResponse,
     MessageResponse,
 )
 
-from backend.app.services.chat_service import chat_service
-from backend.app.services.memory_ai import extract_memory
+from app.services.chat_service import chat_service
+from app.services.memory_ai import extract_memory
 
 router = APIRouter(
     prefix="/chat",

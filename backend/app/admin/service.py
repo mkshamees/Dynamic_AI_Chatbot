@@ -3,11 +3,11 @@ from datetime import datetime
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from backend.app.models.user import User
-from backend.app.models.conversation import Conversation
-from backend.app.models.message import Message
-from backend.app.models.document import Document
-from backend.app.models.memory import Memory
+from app.models.user import User
+from app.models.conversation import Conversation
+from app.models.message import Message
+from app.models.document import Document
+from app.models.memory import Memory
 
 
 class AdminService:

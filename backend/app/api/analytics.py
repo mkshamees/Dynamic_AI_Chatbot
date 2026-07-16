@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from backend.app.auth.dependencies import get_current_user
-from backend.app.database.session import get_db
+from app.auth.dependencies import get_current_user
+from app.database.session import get_db
 
-from backend.app.models.user import User
+from app.models.user import User
 
-from backend.app.schemas.analytics import (
+from app.schemas.analytics import (
     AnalyticsOverview,
     ConversationTrend,
     MessageTrend,
@@ -16,7 +16,9 @@ from backend.app.schemas.analytics import (
     AIUsage,
 )
 
-from backend.app.services.analytics_service import analytics_service
+print("AIUsage =", AIUsage)
+
+from app.services.analytics_service import analytics_service
 
 router = APIRouter(
     prefix="/analytics",

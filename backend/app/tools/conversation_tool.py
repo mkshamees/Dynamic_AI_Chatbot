@@ -1,5 +1,5 @@
-from backend.app.agents.tool import Tool
-from backend.app.agents.registry import tool_registry
+from app.agents.tool import Tool
+from app.agents.registry import tool_registry
 
 
 class ConversationTool(Tool):

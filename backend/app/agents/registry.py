@@ -1,6 +1,6 @@
 from typing import Dict
 
-from backend.app.agents.tool import Tool
+from app.agents.tool import Tool
 
 
 class ToolRegistry:

@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
-from backend.app.models.memory import Memory
+from app.models.memory import Memory
 
-from backend.app.vector_store.chroma_store import (
+from app.vector_store.chroma_store import (
     save_memory,
     search_memory,
 )

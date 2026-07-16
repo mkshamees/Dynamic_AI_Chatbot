@@ -3,12 +3,12 @@ import uuid
 
 from sqlalchemy.orm import Session
 
-from backend.app.models.document import Document
+from app.models.document import Document
 
-from backend.app.rag.loader import load_document
-from backend.app.rag.splitter import split_text
+from app.rag.loader import load_document
+from app.rag.splitter import split_text
 
-from backend.app.vector_store.chroma_store import (
+from app.vector_store.chroma_store import (
     save_document_chunk,
 )
 

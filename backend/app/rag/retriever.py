@@ -1,4 +1,4 @@
-from backend.app.vector_store.chroma_store import search_document
+from app.vector_store.chroma_store import search_document
 
 
 def retrieve_document_context(

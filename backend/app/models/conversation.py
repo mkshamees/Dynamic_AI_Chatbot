@@ -2,7 +2,7 @@ from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
-from backend.app.database.base import Base
+from app.database.base import Base
 
 
 class Conversation(Base):
