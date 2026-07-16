@@ -1,21 +1,22 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.app.api.auth import router as auth_router
-from backend.app.api.chat import router as chat_router
-from backend.app.api.analytics import router as analytics_router
+from app.api.auth import router as auth_router
+from app.api.chat import router as chat_router
+from app.api.analytics import router as analytics_router
 
 # Old SQL Memory API
-from backend.app.api.memory import router as memory_router
+from app.api.memory import router as memory_router
 
 # New Document APIs
-from backend.app.api.documents import router as document_router
-from backend.app.api.rag import router as rag_router
+from app.api.documents import router as document_router
+from app.api.rag import router as rag_router
 
-from backend.app.config.settings import settings
-from backend.app.database.init_db import init_db
+from app.config.settings import settings
+from app.database.init_db import init_db
 
-from backend.app.admin.routes import router as admin_router
+from app.admin.routes import router as admin_router
+
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -74,10 +75,10 @@ app.include_router(document_router)
 # RAG Search API
 app.include_router(rag_router)
 
-
+# Analytics
 app.include_router(analytics_router)
 
-
+# Admin
 app.include_router(admin_router)
 
 
