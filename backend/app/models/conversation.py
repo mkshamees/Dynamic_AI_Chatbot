@@ -1,4 +1,5 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from backend.app.database.base import Base
@@ -9,6 +10,26 @@ class Conversation(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False,
+    )
 
-    created_at = Column(DateTime, default=datetime.utcnow)
+    # Title shown in the sidebar
+    title = Column(
+        String(255),
+        default="New Chat",
+    )
+
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow,
+    )
+
+    messages = relationship(
+        "Message",
+        backref="conversation",
+        cascade="all, delete-orphan",
+        order_by="Message.created_at",
+    )

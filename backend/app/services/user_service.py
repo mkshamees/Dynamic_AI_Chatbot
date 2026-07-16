@@ -30,12 +30,27 @@ def create_user(db: Session, user: UserCreate):
 
 
 def authenticate_user(db: Session, email: str, password: str):
+    print("\n========== AUTH DEBUG ==========")
+    print("Email:", email)
+
     user = get_user_by_email(db, email)
 
-    if not user:
+    if user is None:
+        print("❌ User NOT found in database.")
         return None
 
-    if not verify_password(password, user.hashed_password):
+    print("✅ User found")
+    print("Database email:", user.email)
+    print("Database username:", user.username)
+    print("Stored hash:", user.hashed_password)
+
+    password_ok = verify_password(password, user.hashed_password)
+
+    print("Password correct?", password_ok)
+
+    if not password_ok:
+        print("❌ Password verification failed.")
         return None
 
+    print("✅ Authentication successful.")
     return user

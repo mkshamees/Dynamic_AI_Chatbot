@@ -9,14 +9,11 @@ class Message(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    conversation_id = Column(Integer, ForeignKey("conversations.id"))
+    conversation_id = Column(Integer, ForeignKey("conversations.id"), nullable=False)
 
-    sender = Column(String(20))
+    role = Column(String(20), nullable=False)  
+    # "user" or "assistant"
 
-    message = Column(Text)
-
-    sentiment = Column(String(20))
-
-    intent = Column(String(50))
+    content = Column(Text, nullable=False)
 
     created_at = Column(DateTime, default=datetime.utcnow)

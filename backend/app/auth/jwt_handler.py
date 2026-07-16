@@ -7,33 +7,77 @@ SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
+print("\n========== JWT SETTINGS ==========")
+print("SECRET_KEY :", repr(SECRET_KEY))
+print("ALGORITHM  :", repr(ALGORITHM))
+print("EXPIRE MIN :", ACCESS_TOKEN_EXPIRE_MINUTES)
+print("=================================\n")
+
 
 def create_access_token(data: dict):
     """
-    Create a JWT access token.
+    Create JWT Access Token
     """
+
     to_encode = data.copy()
 
-    expire = datetime.now(timezone.utc) + timedelta(
+    now = datetime.now(timezone.utc)
+
+    expire = now + timedelta(
         minutes=ACCESS_TOKEN_EXPIRE_MINUTES
     )
 
-    to_encode.update({"exp": expire})
+    print("\n========== TOKEN CREATION ==========")
+    print("Current UTC Time :", now)
+    print("Expiry UTC Time  :", expire)
+    print("Minutes          :", ACCESS_TOKEN_EXPIRE_MINUTES)
+    print("====================================")
 
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    to_encode.update({
+        "exp": expire
+    })
+
+    token = jwt.encode(
+        to_encode,
+        SECRET_KEY,
+        algorithm=ALGORITHM,
+    )
+
+    print("\nTOKEN CREATED")
+    print(token)
+    print("====================================\n")
+
+    return token
 
 
 def verify_access_token(token: str):
     """
-    Verify a JWT access token.
+    Verify JWT Access Token
     """
+
     try:
+
+        print("\n========== VERIFY TOKEN ==========")
+        print("Current UTC Time :", datetime.now(timezone.utc))
+        print("Received Token   :", token)
+
         payload = jwt.decode(
             token,
             SECRET_KEY,
-            algorithms=[ALGORITHM]
+            algorithms=[ALGORITHM],
         )
+
+        print("\nTOKEN VALID")
+        print("Decoded Payload :", payload)
+        print("==================================\n")
+
         return payload
 
-    except JWTError:
+    except JWTError as e:
+
+        print("\n========== JWT ERROR ==========")
+        print("Current UTC Time :", datetime.now(timezone.utc))
+        print("Error            :", str(e))
+        print("================================\n")
+
         return None

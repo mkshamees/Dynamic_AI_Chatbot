@@ -23,7 +23,18 @@ class Settings(BaseSettings):
     # ==========================================
     # AI PROVIDER
     # ==========================================
-    AI_PROVIDER: str = "ollama"
+    # Options:
+    #   groq
+    #   openai
+    #   ollama
+    # ==========================================
+    AI_PROVIDER: str = "groq"
+
+    # ==========================================
+    # GROQ
+    # ==========================================
+    GROQ_API_KEY: str = ""
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
 
     # ==========================================
     # OPENAI

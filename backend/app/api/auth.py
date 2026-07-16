@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -24,6 +26,10 @@ router = APIRouter(
 )
 
 
+# ==========================================================
+# REGISTER
+# ==========================================================
+
 @router.post(
     "/register",
     response_model=UserResponse,
@@ -33,17 +39,16 @@ def register(
     user: UserCreate,
     db: Session = Depends(get_db),
 ):
-    """
-    Register a new user.
-    """
 
     if get_user_by_email(db, user.email):
+
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered.",
         )
 
     if get_user_by_username(db, user.username):
+
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Username already exists.",
@@ -51,6 +56,10 @@ def register(
 
     return create_user(db, user)
 
+
+# ==========================================================
+# LOGIN
+# ==========================================================
 
 @router.post(
     "/login",
@@ -60,9 +69,6 @@ def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
 ):
-    """
-    Authenticate a user and return a JWT access token.
-    """
 
     print("\n========== LOGIN DEBUG ==========")
     print("Username received :", repr(form_data.username))
@@ -78,12 +84,38 @@ def login(
     print("Authentication Result:", user)
 
     if not user:
+
         print("❌ LOGIN FAILED")
+
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password.",
-            headers={"WWW-Authenticate": "Bearer"},
+            headers={
+                "WWW-Authenticate": "Bearer",
+            },
         )
+
+    # ======================================================
+    # Check Active Account
+    # ======================================================
+
+    if not user.is_active:
+
+        raise HTTPException(
+            status_code=403,
+            detail="Your account has been deactivated.",
+        )
+
+    # ======================================================
+    # Update Login Information
+    # ======================================================
+
+    now = datetime.utcnow()
+
+    user.last_login = now
+    user.last_activity = now
+
+    db.commit()
 
     print("✅ LOGIN SUCCESSFUL")
 
@@ -102,6 +134,10 @@ def login(
     }
 
 
+# ==========================================================
+# CURRENT USER
+# ==========================================================
+
 @router.get(
     "/me",
     response_model=UserResponse,
@@ -109,7 +145,5 @@ def login(
 def read_current_user(
     current_user: User = Depends(get_current_user),
 ):
-    """
-    Return the currently authenticated user.
-    """
+
     return current_user
